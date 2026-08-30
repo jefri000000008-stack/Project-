@@ -1,10 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Website Saya</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Voucher</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f5f9;
+      color: #222;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    button {
+      border: none;
+      margin-top: 18px;
+      background: #16803c;
+      color: white;
+      font-weight: bold;
+    }
+
+    .voucher {
+      margin-top: 22px;
+      padding: 18px;
+      border: 2px dashed #16803c;
+      border-radius: 14px;
+      display: none;
+      text-align: center;
+    }
+
+    .code {
+      font-size: 25px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 12px 0;
+    }
+
+    .copy {
+      background: #333;
+    }
+
+    .small {
+      color: #666;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Halo!</h1>
-    <p>Website saya berhasil dibuat.</p>
+
+  <div class="container">
+
+    <div class="card">
+
+      <h1>🎟️ Program Voucher</h1>
+
+      <p class="small">
+        Buat kode voucher dengan cepat.
+      </p>
+
+      <label>Nama</label>
+
+      <input
+        id="nama"
+        type="text"
+        placeholder="Masukkan nama"
+      >
+
+      <label>Nominal Voucher</label>
+
+      <select id="nominal">
+        <option value="10000">Rp10.000</option>
+        <option value="25000">Rp25.000</option>
+        <option value="50000">Rp50.000</option>
+        <option value="100000">Rp100.000</option>
+      </select>
+
+      <button onclick="buatVoucher()">
+        Buat Voucher
+      </button>
+
+      <div id="hasil" class="voucher">
+
+        <div>
+          Voucher berhasil dibuat!
+        </div>
+
+        <div id="info"></div>
+
+        <div id="kode" class="code"></div>
+
+        <button
+          class="copy"
+          onclick="salinKode()">
+          📋 Salin Kode
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function buatVoucher() {
+
+      const nama =
+        document.getElementById("nama").value.trim();
+
+      const nominal =
+        document.getElementById("nominal").value;
+
+      if (!nama) {
+
+        alert("Masukkan nama terlebih dahulu.");
+
+        return;
+      }
+
+      const huruf =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+      let acak = "";
+
+      for (let i = 0; i < 8; i++) {
+
+        acak +=
+          huruf[Math.floor(Math.random() * huruf.length)];
+
+      }
+
+      const kode = "VCR-" + acak;
+
+      document.getElementById("info").textContent =
+        nama + " • Rp" +
+        Number(nominal).toLocaleString("id-ID");
+
+      document.getElementById("kode").textContent =
+        kode;
+
+      document.getElementById("hasil").style.display =
+        "block";
+    }
+
+
+    function salinKode() {
+
+      const kode =
+        document.getElementById("kode").textContent;
+
+      navigator.clipboard.writeText(kode).then(() => {
+
+        alert(
+          "Kode voucher berhasil disalin: " + kode
+        );
+
+      });
+
+    }
+
+  </script>
+
 </body>
 </html>
